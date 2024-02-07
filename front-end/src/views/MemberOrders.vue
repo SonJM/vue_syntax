@@ -1,13 +1,14 @@
 <template>
     <OrderListComponent
     :isAdmin="true"
-    apiUrl="http://localhost:8082/orders"
+    :apiUrl="`http://localhost:8082/member/${id}/orders`"
     />
 </template>
 
 <script>
 import OrderListComponent from '@/components/OrderListComponent.vue';
 export default {
+    props:["id"],
     components:{
         OrderListComponent
     }

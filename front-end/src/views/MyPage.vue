@@ -4,11 +4,24 @@
         <table class="table">
         <thead>
             <tr>
-                <th>이름</th>
-                <th>email</th>
-                <th>도시</th>
-                <th>상세주소</th>
-                <th>우편번호</th>
+                <td>이름</td>
+                <td>{{userInfo.name}}</td>
+            </tr>
+            <tr>
+                <td>email</td>
+                <td>{{userInfo.email}}</td>
+            </tr>
+            <tr>
+                <td>도시</td>
+                <td>{{userInfo.city}}</td>
+            </tr>
+            <tr>
+                <td>상세주소</td>
+                <td>{{userInfo.street}}</td>
+            </tr>
+            <tr>
+                <td>우편정보</td>
+                <td>{{userInfo.zipcode}}</td>
             </tr>
         </thead>
         <tbody>
@@ -18,15 +31,31 @@
     </div>
     <OrderListComponent
     :isAdmin="false"
-    apiUrl="http://localhost:8082/member/myorders"
+    apiUrl="/member/myorders"
     />
 </template>
 
 <script>
+import axios from 'axios';
 import OrderListComponent from '@/components/OrderListComponent.vue';
 export default {
     components:{
         OrderListComponent
+    },
+    data(){
+        return {
+            userInfo: [],
+        }
+    },
+    async created() {
+    try {
+        const token = localStorage.getItem("token");
+        const headers = { Authorization: `Bearer ${token}` };
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/member/myInfo`, {headers});
+        this.userInfo = response.data;
+    } catch (error) {
+        console.log(error.response);
     }
+  },
 }
 </script>

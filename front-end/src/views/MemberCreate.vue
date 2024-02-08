@@ -60,7 +60,7 @@ export default {
                     street: this.street,
                     zipcode: this.zipcode,
                 }
-                await axios.post("http://localhost:8082/member/new", param);
+                await axios.post(`${process.env.VUE_APP_API_BASE_URL}/member/new`, param);
                 this.$router.push({name : 'Login'});
             }catch(error){
                 const error_message = error.response.data.error_message;
